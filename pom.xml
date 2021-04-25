@@ -58,6 +58,12 @@
             <artifactId>jjwt</artifactId>
             <version>${jwt.version}</version>
         </dependency>
+        <!-- hutool-extra -->
+        <dependency>
+            <groupId>cn.hutool</groupId>
+            <artifactId>hutool-extra</artifactId>
+            <version>5.6.3</version>
+        </dependency>
 
     </dependencies>
 

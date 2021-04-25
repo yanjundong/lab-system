@@ -14,21 +14,16 @@ import java.time.LocalDate;
 public class ChuChaiBo {
 
     /**
-     * 出差id，仅供数据库内部使用，唯一，自动生成
-     */
-    private String id;
-
-    /**
      * 出差日期，必填项
      */
     @NotNull
-    private LocalDate date;
+    private LocalDate chuChaiDate;
 
     /**
      * 出差时间段，必填项
      */
     @NotNull
-    private ChuChaiTime time;
+    private ChuChaiTime chuChaiTime;
 
     /**
      * 出差地址，必填项
@@ -36,28 +31,20 @@ public class ChuChaiBo {
     @NotEmpty(message = "正确填写出差地址")
     private String destination;
 
-    public String getId() {
-        return id;
+    public LocalDate getChuChaiDate() {
+        return chuChaiDate;
     }
 
-    public void setId(String id) {
-        this.id = id;
+    public void setChuChaiDate(LocalDate chuChaiDate) {
+        this.chuChaiDate = chuChaiDate;
     }
 
-    public LocalDate getDate() {
-        return date;
+    public ChuChaiTime getChuChaiTime() {
+        return chuChaiTime;
     }
 
-    public void setDate(LocalDate date) {
-        this.date = date;
-    }
-
-    public ChuChaiTime getTime() {
-        return time;
-    }
-
-    public void setTime(ChuChaiTime time) {
-        this.time = time;
+    public void setChuChaiTime(ChuChaiTime chuChaiTime) {
+        this.chuChaiTime = chuChaiTime;
     }
 
     public String getDestination() {

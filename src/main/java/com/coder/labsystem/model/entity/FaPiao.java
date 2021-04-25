@@ -1,6 +1,10 @@
 package com.coder.labsystem.model.entity;
 
+import cn.hutool.core.util.IdUtil;
 import com.coder.labsystem.constant.BaoXiaoState;
+import com.coder.labsystem.model.bo.FaPiaoBo;
+import org.springframework.data.mongodb.core.mapping.Document;
+import org.springframework.data.mongodb.core.mapping.MongoId;
 
 import javax.validation.constraints.NotEmpty;
 import java.math.BigDecimal;
@@ -12,9 +16,11 @@ import java.util.Objects;
  * @date : 2021-04-19 17:58
  * @description : 发票
  */
+@Document(value = "faPiao")
 public class FaPiao {
 
     /** 出差id，仅供数据库内部使用，唯一，自动生成 */
+    @MongoId
     private String id;
 
     /** 用户名称，由token获取，后端填写 */
@@ -28,8 +34,8 @@ public class FaPiao {
     @NotEmpty(message = "正确填写金额")
     private BigDecimal money;
 
-    /** 发票文件 */
-    private byte[] date;
+    /** 发票文件对应的id */
+    private String fileID;
 
     /** 报销状态，程序自动维护 */
     private BaoXiaoState state;
@@ -38,7 +44,23 @@ public class FaPiao {
     private LocalDateTime createDateTime;
 
     public FaPiao() {
+        this.id = IdUtil.objectId();
         this.createDateTime = LocalDateTime.now();
+    }
+
+    public FaPiao(String username, String shangPinName, BigDecimal money, String fileID, BaoXiaoState state) {
+        this();
+        this.username = username;
+        this.shangPinName = shangPinName;
+        this.money = money;
+        this.fileID = fileID;
+        this.state = state;
+    }
+
+    public FaPiao(String username, FaPiaoBo faPiaoBo) {
+        this(username, faPiaoBo.getShangPinName(),
+                faPiaoBo.getMoney(),
+                faPiaoBo.getFileID(), BaoXiaoState.UNTREATED);
     }
 
     public String getId() {
@@ -89,8 +111,12 @@ public class FaPiao {
         this.createDateTime = createDateTime;
     }
 
-    public byte[] getDate() {
-        return date;
+    public String getFileID() {
+        return fileID;
+    }
+
+    public void setFileID(String fileID) {
+        this.fileID = fileID;
     }
 
     @Override

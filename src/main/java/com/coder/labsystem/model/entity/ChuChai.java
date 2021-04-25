@@ -1,5 +1,6 @@
 package com.coder.labsystem.model.entity;
 
+import cn.hutool.core.util.IdUtil;
 import com.coder.labsystem.constant.BaoXiaoState;
 import com.coder.labsystem.constant.ChuChaiTime;
 import com.coder.labsystem.model.bo.ChuChaiBo;
@@ -31,12 +32,12 @@ public class ChuChai {
     /** 出差日期，必填项 */
     @NotNull
     @Field(value = "chuChaiDate")
-    private LocalDate date;
+    private LocalDate chuChaiDate;
 
     /** 出差时间段，必填项 */
     @NotNull
     @Field(value = "chuChaiTime")
-    private ChuChaiTime time;
+    private ChuChaiTime chuChaiTime;
 
     /** 出差地址，必填项 */
     @NotEmpty(message = "正确填写出差地址")
@@ -48,14 +49,27 @@ public class ChuChai {
     /** 出差提交日期， 自动生成*/
     private LocalDateTime createDateTime;
 
+    public ChuChai() {
+        this.id = IdUtil.objectId();
+        this.createDateTime = LocalDateTime.now();
+    }
+
     public ChuChai(String username, ChuChaiBo chuChaiBo) {
-        this.id = chuChaiBo.getId();
+        this();
         this.username = username;
-        this.date = chuChaiBo.getDate();
-        this.time = chuChaiBo.getTime();
+        this.chuChaiDate = chuChaiBo.getChuChaiDate();
+        this.chuChaiTime = chuChaiBo.getChuChaiTime();
         this.destination = chuChaiBo.getDestination();
         this.state = BaoXiaoState.UNTREATED;
-        this.createDateTime = LocalDateTime.now();
+    }
+
+    public ChuChai(String id, String username, ChuChaiBo chuChaiBo) {
+        this.id = id;
+        this.username = username;
+        this.chuChaiDate = chuChaiBo.getChuChaiDate();
+        this.chuChaiTime = chuChaiBo.getChuChaiTime();
+        this.destination = chuChaiBo.getDestination();
+        this.state = BaoXiaoState.UNTREATED;
     }
 
     public String getId() {
@@ -74,20 +88,20 @@ public class ChuChai {
         this.username = username;
     }
 
-    public LocalDate getDate() {
-        return date;
+    public LocalDate getChuChaiDate() {
+        return chuChaiDate;
     }
 
-    public void setDate(LocalDate date) {
-        this.date = date;
+    public void setChuChaiDate(LocalDate chuChaiDate) {
+        this.chuChaiDate = chuChaiDate;
     }
 
-    public ChuChaiTime getTime() {
-        return time;
+    public ChuChaiTime getChuChaiTime() {
+        return chuChaiTime;
     }
 
-    public void setTime(ChuChaiTime time) {
-        this.time = time;
+    public void setChuChaiTime(ChuChaiTime chuChaiTime) {
+        this.chuChaiTime = chuChaiTime;
     }
 
     public String getDestination() {
@@ -106,13 +120,21 @@ public class ChuChai {
         this.state = state;
     }
 
+    public LocalDateTime getCreateDateTime() {
+        return createDateTime;
+    }
+
+    public void setCreateDateTime(LocalDateTime createDateTime) {
+        this.createDateTime = createDateTime;
+    }
+
     @Override
     public String toString() {
         return "ChuChai{" +
                 "id='" + id + '\'' +
                 ", username='" + username + '\'' +
-                ", date=" + date +
-                ", time=" + time +
+                ", date=" + chuChaiDate +
+                ", time=" + chuChaiTime +
                 ", destination='" + destination + '\'' +
                 ", state=" + state +
                 '}';
@@ -123,11 +145,11 @@ public class ChuChai {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         ChuChai chuChai = (ChuChai) o;
-        return id.equals(chuChai.id) && username.equals(chuChai.username) && date.equals(chuChai.date) && time == chuChai.time && destination.equals(chuChai.destination);
+        return id.equals(chuChai.id) && username.equals(chuChai.username) && chuChaiDate.equals(chuChai.chuChaiDate) && chuChaiTime == chuChai.chuChaiTime && destination.equals(chuChai.destination);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, username, date, time, destination);
+        return Objects.hash(id, username, chuChaiDate, chuChaiTime, destination);
     }
 }

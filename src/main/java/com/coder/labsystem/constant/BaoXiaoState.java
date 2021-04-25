@@ -8,22 +8,11 @@ package com.coder.labsystem.constant;
 public enum BaoXiaoState {
 
     /** 出差或发票 已报销*/
-    PROCESSED(true),
-    /** 出差或发票 已报销 */
-    UNTREATED(false);
+    PROCESSED,
+    /** 出差或发票 未报销 */
+    UNTREATED,
+    /** 出差或发票 所有 */
+    ALL;
 
-    private boolean val;
-
-    BaoXiaoState(boolean val) {
-        this.val = val;
-    }
-
-    public static BaoXiaoState of(boolean val) {
-        return val ? PROCESSED : UNTREATED;
-    }
-
-    public boolean getVal() {
-        return val;
-    }
 
 }

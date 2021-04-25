@@ -66,6 +66,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         http.authorizeRequests()
                 .antMatchers(HttpMethod.OPTIONS, "/**").permitAll()
                 .antMatchers(HttpMethod.POST, "/user").permitAll()  //注册用户
+                .antMatchers(HttpMethod.GET, "/file/**").permitAll()
                 /*.antMatchers(HttpMethod.GET, "/user/account/repetition").permitAll()
                 .antMatchers("/actuator/**").permitAll()*/
                 .anyRequest().authenticated()

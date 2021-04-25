@@ -22,6 +22,9 @@ public class MongoOperatorUtil {
         Update update = new Update();
         Field[] fields = clazz.getDeclaredFields();
         for (Field field : fields) {
+            /* username 和 id 不允许修改 */
+            if ("username".equals(field.getName()) || "id".equals(field.getName()))
+                continue;
             field.setAccessible(true);
             try {
                 update.set(field.getName(), field.get(bean));

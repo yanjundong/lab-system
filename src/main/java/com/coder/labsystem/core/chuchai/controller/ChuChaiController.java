@@ -1,7 +1,7 @@
 package com.coder.labsystem.core.chuchai.controller;
 
 import com.coder.labsystem.core.chuchai.service.ChuChaiService;
-import com.coder.labsystem.model.bo.ChuChaiBo;
+import com.coder.labsystem.model.bo.ChuChaiBO;
 import com.coder.labsystem.model.http.ErrorCode;
 import com.coder.labsystem.model.http.ResponseBody;
 import com.coder.labsystem.model.query.ChuChaiQuery;
@@ -29,7 +29,7 @@ public class ChuChaiController {
      * @return
      */
     @PostMapping(value = "/chuchai")
-    public ResponseBody addChuChai(@RequestBody ChuChaiBo chuChai) {
+    public ResponseBody addChuChai(@RequestBody ChuChaiBO chuChai) {
         boolean addChuChai = chuChaiService.addChuChai(chuChai);
         return ResponseBody.getInstance(ErrorCode.OK, "提交成功");
     }
@@ -40,7 +40,7 @@ public class ChuChaiController {
      * @return
      */
     @PutMapping(value = "/chuchai/{id}")
-    public ResponseBody updateChuChai(@PathVariable("id") String id, @RequestBody ChuChaiBo chuChai) {
+    public ResponseBody updateChuChai(@PathVariable("id") String id, @RequestBody ChuChaiBO chuChai) {
         boolean update = chuChaiService.updateChuChai(id, chuChai);
         return ResponseBody.getInstance(ErrorCode.OK, "修改成功");
     }

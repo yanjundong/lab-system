@@ -1,5 +1,7 @@
 package com.coder.labsystem.model.vo;
 
+import org.springframework.data.domain.Page;
+
 import java.util.List;
 
 /**
@@ -30,6 +32,11 @@ public class PageResp<T> {
         this.content = content;
         this.totalElements = totalElements;
         this.totalPages = totalPages;
+    }
+
+    public PageResp(Page page) {
+        this(page.getNumber(), page.getSize(),
+                page.getContent(), page.getTotalElements(), page.getTotalPages());
     }
 
     public List<T> getContent() {

@@ -11,7 +11,7 @@ import java.time.LocalDate;
  * @date : 2021-04-20 10:48
  * @description : 出差记录的业务对象
  */
-public class ChuChaiBo {
+public class ChuChaiBO {
 
     /**
      * 出差日期，必填项

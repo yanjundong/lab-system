@@ -7,6 +7,7 @@ import com.coder.labsystem.model.entity.UserExtendInfo;
 import com.coder.labsystem.model.http.ResponseBody;
 import com.coder.labsystem.model.query.UserQuery;
 import org.springframework.data.domain.Page;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
@@ -31,6 +32,7 @@ public class UserController {
      * @return
      */
     @PostMapping(value = "/user")
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     public ResponseBody addUser(@RequestBody @Valid UserBasicInfo user) {
         boolean addUser = userService.addUser(user);
         if (addUser) {
@@ -75,6 +77,7 @@ public class UserController {
      * @return
      */
     @PostMapping(value = "/users")
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     public ResponseBody getUsers(@RequestBody UserQuery query) {
         Page<User> users = userService.getUsers(query);
 
@@ -86,8 +89,9 @@ public class UserController {
      * @param username 用户名
      * @return
      */
-    @DeleteMapping(value = "/user")
-    public ResponseBody removeUser(String username) {
+    @DeleteMapping(value = "/user/{username}")
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
+    public ResponseBody removeUser(@PathVariable(value = "username") String username) {
 
         return null;
     }

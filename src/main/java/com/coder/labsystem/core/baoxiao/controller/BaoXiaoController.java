@@ -1,56 +1,69 @@
 package com.coder.labsystem.core.baoxiao.controller;
 
+import com.coder.labsystem.core.baoxiao.service.BaoXiaoService;
+import com.coder.labsystem.model.bo.ChuChaiBaoXiaoBO;
+import com.coder.labsystem.model.http.ErrorCode;
 import com.coder.labsystem.model.http.ResponseBody;
-import com.coder.labsystem.model.query.BaoXiaoQuery;
+import com.coder.labsystem.model.query.ChuChaiQuery;
+import com.coder.labsystem.model.vo.PageResp;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.YearMonth;
+import java.util.List;
 
 /**
  * @author : JQK
  * @date : 2021-04-22 17:51
  * @description : 管理员管理 出差报销和发票报销
  *
- * 管理员报销时的流程：
- * 1. 查询出该月需要报销的用户、金额等信息；
- * 2. 管理员也可以根据用户名查询到用户的详细出差信息、提交发票记录等详情；
- * 3. 如果管理员人员某条报销记录不合格，也可以删除或修改；
- * 4. 之后重新获取该月的需报销情况；
  */
 @RestController
 public class BaoXiaoController {
-    /**
-     * 查询出该月需要报销的用户、金额等信息
-     * @param yearMonth 要查询的年月，默认为当月
-     * @return
-     */
-    @GetMapping(value = "/baoxiao")
-    public ResponseBody listBaoXiaoMoney(@RequestParam(required = false) YearMonth yearMonth) {
 
-        return null;
+    private final BaoXiaoService baoXiaoService;
+
+    public BaoXiaoController(BaoXiaoService baoXiaoService) {
+        this.baoXiaoService = baoXiaoService;
     }
 
     /**
-     * 按用户名查询报销情况——出差记录、发票提交记录
+     * 出差的报销，按用户列出某月需要报销的金额，不做分页处理
+     * @param yearMonth
+     * @return
+     */
+    @GetMapping(value = "/baoxiao/chuchai")
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
+    public ResponseBody listChuChaiBaoXiaoMoney(@RequestParam(required = false) YearMonth yearMonth) {
+        List<ChuChaiBaoXiaoBO> baoXiaoBOList = baoXiaoService.listChuChaiBaoXiaoMoney(yearMonth);
+        return ResponseBody.getInstance(ErrorCode.OK, "查询成功", baoXiaoBOList);
+    }
+
+    /**
+     * 列出某人某月的出差报销情况
      * @param username
-     * @param baoXiaoQuery
+     * @param chuChaiQuery
      * @return
      */
     @PostMapping(value = "/baoxiao/{username}")
-    public ResponseBody listBaoXiaoByUser(@PathVariable("username")String username, @RequestBody BaoXiaoQuery baoXiaoQuery) {
-
-        return null;
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
+    public ResponseBody listChuChaiBaoXiaoByUsername(@PathVariable(value = "username")String username,
+                                                     @RequestBody ChuChaiQuery chuChaiQuery) {
+        PageResp pageResp = baoXiaoService.listChuChaiBaoXiaoByUsername(username, chuChaiQuery);
+        return ResponseBody.getInstance(ErrorCode.OK, "查询成功", pageResp);
     }
 
     /**
-     * 确定某月（如果不指定，为当前月）的所有记录已报销
-     * @param yearMonth 要修改的年月，默认为当月
+     * 确定已报销某月的所有出差
+     * TODO 目前出差报销不在数据库中记录
+     * @param yearMonth 如果没有该参数，则为上个月
      * @return
      */
-    @PutMapping(value = "/baoxiao")
-    public ResponseBody updateBaoXiao(@RequestParam(required = false) YearMonth yearMonth) {
-
-        return null;
+    @PutMapping(value = "/baoxiao/state")
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
+    @Deprecated
+    public ResponseBody updateChuChaiStateByYearMonth(@RequestParam(required = false)YearMonth yearMonth) {
+        boolean b = baoXiaoService.baoXiaoChuChai(yearMonth);
+        return ResponseBody.getInstance(ErrorCode.OK, "报销成功");
     }
-
 }

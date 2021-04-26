@@ -8,21 +8,27 @@ package com.coder.labsystem.constant;
 public enum ChuChaiTime {
 
     /** 上午 */
-    FORENOON(1),
+    FORENOON(1, 30),
 
     /** 下午 */
-    AFTERNOON(2),
+    AFTERNOON(2, 30),
 
     /** 全天 */
-    ALLDAY(3);
+    ALLDAY(3, 50);
 
     private int val;
+    private int money;
 
-    ChuChaiTime(int val) {
+    ChuChaiTime(int val, int money) {
         this.val = val;
+        this.money = money;
     }
 
     public int getVal() {
         return val;
+    }
+
+    public int getMoney() {
+        return money;
     }
 }

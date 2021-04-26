@@ -14,7 +14,7 @@ public class BaoXiaoQuery extends PageQuery {
     /** 报销状态，默认为未报销 */
     private BaoXiaoState state;
 
-    /** 查询月份，默认为当前年月 */
+    /** 查询月份，默认为上一个月 */
     private YearMonth yearMonth;
 
     public BaoXiaoState getState() {
@@ -40,7 +40,7 @@ public class BaoXiaoQuery extends PageQuery {
             state = BaoXiaoState.UNTREATED;
         }
         if (null == yearMonth) {
-            yearMonth = YearMonth.now();
+            yearMonth = YearMonth.now().minusMonths(1);
         }
     }
 

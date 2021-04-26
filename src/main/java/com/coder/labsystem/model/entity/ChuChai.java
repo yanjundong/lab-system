@@ -3,7 +3,7 @@ package com.coder.labsystem.model.entity;
 import cn.hutool.core.util.IdUtil;
 import com.coder.labsystem.constant.BaoXiaoState;
 import com.coder.labsystem.constant.ChuChaiTime;
-import com.coder.labsystem.model.bo.ChuChaiBo;
+import com.coder.labsystem.model.bo.ChuChaiBO;
 import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.data.mongodb.core.mapping.Field;
 import org.springframework.data.mongodb.core.mapping.MongoId;
@@ -54,7 +54,7 @@ public class ChuChai {
         this.createDateTime = LocalDateTime.now();
     }
 
-    public ChuChai(String username, ChuChaiBo chuChaiBo) {
+    public ChuChai(String username, ChuChaiBO chuChaiBo) {
         this();
         this.username = username;
         this.chuChaiDate = chuChaiBo.getChuChaiDate();
@@ -63,7 +63,7 @@ public class ChuChai {
         this.state = BaoXiaoState.UNTREATED;
     }
 
-    public ChuChai(String id, String username, ChuChaiBo chuChaiBo) {
+    public ChuChai(String id, String username, ChuChaiBO chuChaiBo) {
         this.id = id;
         this.username = username;
         this.chuChaiDate = chuChaiBo.getChuChaiDate();

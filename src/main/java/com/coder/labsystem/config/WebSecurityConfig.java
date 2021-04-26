@@ -52,7 +52,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     }
 
     @Override
-    public void configure(WebSecurity web) throws Exception {
+    public void configure(WebSecurity web) {
         web.ignoring()
                 .antMatchers("/v2/**")
                 .antMatchers("/swagger-resources/**")
@@ -65,7 +65,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
         http.authorizeRequests()
                 .antMatchers(HttpMethod.OPTIONS, "/**").permitAll()
-                .antMatchers(HttpMethod.POST, "/user").permitAll()  //注册用户
+                /*.antMatchers(HttpMethod.POST, "/user").permitAll() */ //注册用户
                 .antMatchers(HttpMethod.GET, "/file/**").permitAll()
                 /*.antMatchers(HttpMethod.GET, "/user/account/repetition").permitAll()
                 .antMatchers("/actuator/**").permitAll()*/

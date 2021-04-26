@@ -2,6 +2,9 @@ package com.coder.labsystem.core.user.service;
 
 import com.coder.labsystem.core.user.repository.CustomUserRepository;
 import com.coder.labsystem.core.user.repository.UserRepository;
+import com.coder.labsystem.exception.AccountNotExistException;
+import com.coder.labsystem.exception.DaoException;
+import com.coder.labsystem.exception.UsernameExistException;
 import com.coder.labsystem.model.entity.User;
 import com.coder.labsystem.model.entity.UserBasicInfo;
 import com.coder.labsystem.model.entity.UserExtendInfo;
@@ -21,6 +24,7 @@ import org.springframework.stereotype.Service;
 @Service
 public class UserService {
     private final static Logger LOG = LoggerFactory.getLogger(UserService.class);
+    private final static Object LOCK = new Object();
     private final UserRepository userRepository;
     private final CustomUserRepository customUserRepository;
     private final PasswordEncoder passwordEncoder;
@@ -37,11 +41,20 @@ public class UserService {
      * @return 注册成功，返回true；否则返回false
      */
     public boolean addUser(UserBasicInfo basicInfo) {
-        String password = basicInfo.getPassword();
-        basicInfo.setPassword(passwordEncoder.encode(password));
-        User user = new User(basicInfo, null);
-        User insert = userRepository.insert(user);
-        return insert == null ? false : true;
+        synchronized (LOCK) {
+            User byUsername = userRepository.findByUsername(basicInfo.getUsername());
+            if (byUsername != null) {
+                throw new UsernameExistException("用户名已被使用");
+            }
+            String password = basicInfo.getPassword();
+            basicInfo.setPassword(passwordEncoder.encode(password));
+            User user = new User(basicInfo, null);
+            User insert = userRepository.insert(user);
+            if (insert == null) {
+                throw new DaoException("添加用户信息错误");
+            }
+            return true;
+        }
     }
 
     /**
@@ -52,7 +65,10 @@ public class UserService {
     public boolean supplyUserExtendInfo(UserExtendInfo extendInfo) {
         UserBasicInfo basicInfo = SecurityUtil.getCurrentUser();
         boolean userExtendInfo = customUserRepository.insertUserExtendInfo(basicInfo.getUsername(), extendInfo);
-        return userExtendInfo;
+        if (!userExtendInfo) {
+            throw new DaoException("补充用户信息错误");
+        }
+        return true;
     }
 
     /**
@@ -63,7 +79,11 @@ public class UserService {
         if (null == username) {
             return null;
         }
-        return null;
+        User user = userRepository.findByUsername(username);
+        if (user == null) {
+            throw new AccountNotExistException("该用户名不存在");
+        }
+        return new UserExtendInfo(user);
     }
 
     /**

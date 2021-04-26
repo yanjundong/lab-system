@@ -26,7 +26,7 @@ public class UserBasicInfoService implements UserDetailsService {
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        UserBasicInfo userInfo = userRepository.findByUsername(username);
+        UserBasicInfo userInfo = new UserBasicInfo(userRepository.findByUsername(username));
         if (null != userInfo) {
             return userInfo;
         }

@@ -3,7 +3,7 @@ package com.coder.labsystem.model.http;
 /**
  * @author : JQK
  * @date : 2021-04-20 19:37
- * @description : 错误码
+ * @description : 错误码，参考阿里巴巴的Java开发手册
  */
 public class ErrorCode {
 
@@ -30,6 +30,15 @@ public class ErrorCode {
     /** 账号已被冻结---二级宏观错误码 */
     public static final String USER_ACCOUNT_LOCK_ERROR = "A0202";
 
+    /** 账号或密码错误---二级宏观错误码 */
+    public static final String USERNAME_OR_PASSWORD_ERROR = "A0210";
+
+    /** 无权限使用API---二级宏观错误码 */
+    public static final String NOT_AUTHORITY_ERROR = "A0312";
+
+    /** 用户请求被拦截---二级宏观错误码 */
+    public static final String REQUEST_DENY_ERROR = "A0320";
+
     /**
      * 服务端错误---一级宏观错误码
      * */
@@ -41,7 +50,7 @@ public class ErrorCode {
     public static final String OTHER_SERVER_ERROR = "C0001";
 
     /** 数据库服务超时---二级宏观错误码 */
-    public static final String DATABASE_TIMEOUT_ERROR = "B0300";
+    public static final String DATABASE_TIMEOUT_ERROR = "B0250";
 
     /** 数据库服务错误---二级宏观错误码 */
     public static final String DATABASE_ERROR = "B0300";

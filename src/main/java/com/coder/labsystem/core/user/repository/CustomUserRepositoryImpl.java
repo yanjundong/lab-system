@@ -34,9 +34,4 @@ public class CustomUserRepositoryImpl implements CustomUserRepository {
         UpdateResult updateResult = mongoTemplate.updateFirst(query, update, User.class, CollectionName.USER_COLLECTION_NAME);
         return updateResult.getModifiedCount() > 0 ? true : false;
     }
-
-    @Override
-    public UserExtendInfo findByUsername(String username) {
-        return null;
-    }
 }

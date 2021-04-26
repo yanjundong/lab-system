@@ -28,14 +28,14 @@ public class UserBasicInfo implements UserDetails {
      * 用户名，用户登录使用，唯一，只能为英文字符，必须
      */
     @NotEmpty(message = "用户名不能为空")
-    @Length(min = 6, max = 12, message = "用户名长度为6-12位")
+    @Length(min = 6, max = 30, message = "用户名长度为6-30位")
     private String username;
 
     /**
      * 用户名登录密码，必须
      */
     @NotEmpty(message = "密码不能为空")
-    @Length(min = 6, max = 12, message = "密码长度为6-12位")
+    @Length(min = 6, max = 20, message = "密码长度为6-20位")
     private String password;
 
     /**
@@ -45,6 +45,10 @@ public class UserBasicInfo implements UserDetails {
     private UserRole userRole;
 
     public UserBasicInfo() {
+    }
+
+    public UserBasicInfo(User user) {
+        this(user.getId(), user.getUsername(), user.getPassword(), user.getUserRole());
     }
 
     public UserBasicInfo(String id, String username, String password, UserRole userRole) {

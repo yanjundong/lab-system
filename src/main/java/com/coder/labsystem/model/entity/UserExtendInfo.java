@@ -27,7 +27,7 @@ public class UserExtendInfo {
     private String email;
 
     /** 用户手机，非必须 */
-    @Length(min = 11, max = 11, message = "手机号码长度不正确")
+    @Length(min = 0, max = 11, message = "手机号码长度不正确")
     @Pattern(regexp = "^(((13[0-9])|(14[579])|(15([0-3]|[5-9]))|(16[6])|(17[0135678])|(18[0-9])|(19[89]))\\d{8})$", message = "手机号码格式错误")
     private String phone;
 
@@ -35,6 +35,10 @@ public class UserExtendInfo {
     private String qq;
 
     public UserExtendInfo() {
+    }
+
+    public UserExtendInfo(User user) {
+        this(user.getFullName(), user.getBirthday(), user.getEmail(), user.getPhone(), user.getQq());
     }
 
     public UserExtendInfo(String fullName, LocalDate birthday, String email, String phone, String qq) {

@@ -5,7 +5,10 @@ import com.coder.labsystem.model.bo.FaPiaoBo;
 import com.coder.labsystem.model.http.ErrorCode;
 import com.coder.labsystem.model.http.ResponseBody;
 import com.coder.labsystem.model.query.FaPiaoQuery;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
+
+import javax.validation.Valid;
 
 /**
  * @author : JQK
@@ -26,7 +29,7 @@ public class FaPiaoController {
      * @return
      */
     @PostMapping("/fapiao")
-    public ResponseBody addFaPiao(@ModelAttribute FaPiaoBo faPiaoBo) {
+    public ResponseBody addFaPiao(@RequestBody @Valid FaPiaoBo faPiaoBo, BindingResult bindingResult) {
         boolean b = faPiaoService.addFaPiao(faPiaoBo);
         return ResponseBody.getInstance(ErrorCode.OK, "上传成功");
     }

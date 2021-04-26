@@ -1,6 +1,7 @@
 package com.coder.labsystem.security;
 
 import com.coder.labsystem.model.entity.UserBasicInfo;
+import com.coder.labsystem.model.http.ErrorCode;
 import com.coder.labsystem.model.http.ResponseBody;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.security.core.Authentication;
@@ -41,11 +42,11 @@ public class CustomSuccessHandler implements AuthenticationSuccessHandler {
         }
         UserBasicInfo user = (UserBasicInfo) authentication.getPrincipal();
         String token = JwtTokenUtil.sign(user.getId(), authentication.getName(), as.toString());
-        HashMap<String, Object> data = new HashMap<>();
+        HashMap<String, Object> data = new HashMap<>(1);
         data.put("token", token);
         response.setContentType("application/json;charset=utf-8");
         PrintWriter out = response.getWriter();
-        out.write(new ObjectMapper().writeValueAsString(ResponseBody.getInstance("200", "登录成功", data)));
+        out.write(new ObjectMapper().writeValueAsString(ResponseBody.getInstance(ErrorCode.OK, "登录成功", data)));
         out.flush();
         out.close();
     }

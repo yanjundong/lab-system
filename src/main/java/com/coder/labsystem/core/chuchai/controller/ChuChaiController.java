@@ -7,7 +7,10 @@ import com.coder.labsystem.model.http.ResponseBody;
 import com.coder.labsystem.model.query.ChuChaiQuery;
 import com.coder.labsystem.model.vo.ChuChaiVo;
 import com.coder.labsystem.model.vo.PageResp;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
+
+import javax.validation.Valid;
 
 /**
  * @author : JQK
@@ -29,7 +32,7 @@ public class ChuChaiController {
      * @return
      */
     @PostMapping(value = "/chuchai")
-    public ResponseBody addChuChai(@RequestBody ChuChaiBO chuChai) {
+    public ResponseBody addChuChai(@RequestBody @Valid ChuChaiBO chuChai, BindingResult bindingResult) {
         boolean addChuChai = chuChaiService.addChuChai(chuChai);
         return ResponseBody.getInstance(ErrorCode.OK, "提交成功");
     }

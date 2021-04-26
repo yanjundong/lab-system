@@ -29,7 +29,11 @@
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-web</artifactId>
         </dependency>
-
+        <!-- SpringBoot 拦截器 -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-aop</artifactId>
+        </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-test</artifactId>
@@ -96,7 +100,16 @@
                 <artifactId>spring-boot-maven-plugin</artifactId>
                 <version>2.3.7.RELEASE</version>
                 <configuration>
+                    <!-- 配置主类 -->
                     <mainClass>com.coder.labsystem.LabSystemApplication</mainClass>
+                    <layout>ZIP</layout>
+                    <!-- 包含项 -->
+                    <includes>
+                        <include>
+                            <groupId>com.coder</groupId>
+                            <artifactId>lab-system</artifactId>
+                        </include>
+                    </includes>
                 </configuration>
                 <executions>
                     <execution>

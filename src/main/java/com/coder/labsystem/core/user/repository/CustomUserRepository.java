@@ -17,11 +17,4 @@ public interface CustomUserRepository {
      */
     boolean insertUserExtendInfo(String id, UserExtendInfo extendInfo);
 
-    /**
-     * 通过用户名查找用户信息
-     * @param username
-     * @return
-     */
-    UserExtendInfo findByUsername(String username);
-
 }

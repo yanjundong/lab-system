@@ -14,7 +14,7 @@ import javax.servlet.http.HttpServletRequest;
  * @description :
  */
 @RestControllerAdvice
-public class DaoExceptionHandler {
+public class DAOExceptionHandler {
 
     @ExceptionHandler(value = {DaoException.class})
     public ResponseBody daoExceptionHandler(HttpServletRequest request, DaoException e) {

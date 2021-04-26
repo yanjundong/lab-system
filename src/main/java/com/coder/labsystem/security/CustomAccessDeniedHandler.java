@@ -1,5 +1,6 @@
 package com.coder.labsystem.security;
 
+import com.coder.labsystem.model.http.ErrorCode;
 import com.coder.labsystem.model.http.ResponseBody;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.security.access.AccessDeniedException;
@@ -24,7 +25,7 @@ public class CustomAccessDeniedHandler implements AccessDeniedHandler {
         response.setContentType("application/json;charset=utf-8");
         ObjectMapper om = new ObjectMapper();
         PrintWriter out = response.getWriter();
-        out.write(om.writeValueAsString(ResponseBody.getInstance("403", "您没有该权限")));
+        out.write(om.writeValueAsString(ResponseBody.getInstance(ErrorCode.NOT_AUTHORITY_ERROR, "您没有该权限")));
         out.flush();
         out.close();
     }
